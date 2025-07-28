@@ -1,5 +1,24 @@
+version: '3.8'
+
+networks:
+  litecoin-net:
+    driver: bridge
+  litecoin-testnet:
+    driver: bridge
+
 services:
-  app:
+  app-prod:
     image: ghcr.io/raznar-lab/litecoin-node-docker:latest
     volumes:
       - ./data:/app/data
+    networks:
+      - litecoin-net
+
+  app-testnet:
+    image: ghcr.io/raznar-lab/litecoin-node-docker:latest
+    volumes:
+      - ./data-test:/app/data
+    environment:
+      - LTC_TESTNET=1
+    networks:
+      - litecoin-testnet
