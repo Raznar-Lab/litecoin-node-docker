@@ -9,15 +9,22 @@ mkdir -p /app/data
 : "${LTC_RPCBIND:=0.0.0.0}"
 : "${LTC_RPCALLOWIP:=0.0.0.0/0}"
 : "${LTC_TESTNET:=}"
-: "${LTC_PRUNE:=550}"  # Prune mode default: ~550 MB
+: "${LTC_PRUNE:=550}"  # ~550 MB
 
-ARGS="-datadir=/app/data -server=1"
-ARGS="$ARGS -rpcuser=${LTC_RPCUSER} -rpcpassword=${LTC_RPCPASSWORD}"
-ARGS="$ARGS -rpcbind=${LTC_RPCBIND} -rpcallowip=${LTC_RPCALLOWIP}"
-ARGS="$ARGS -prune=${LTC_PRUNE}"
+CONFIG_FILE="/app/data/litecoin.conf"
+
+# Create the config file
+cat > "$CONFIG_FILE" <<EOF
+server=1
+rpcuser=${LTC_RPCUSER}
+rpcpassword=${LTC_RPCPASSWORD}
+rpcbind=${LTC_RPCBIND}
+rpcallowip=${LTC_RPCALLOWIP}
+prune=${LTC_PRUNE}
+EOF
 
 if [ -n "$LTC_TESTNET" ]; then
-  ARGS="$ARGS -testnet"
+  echo "testnet=1" >> "$CONFIG_FILE"
 fi
 
-litecoind $ARGS "$@"
+exec litecoind -datadir=/app/data "$@"
