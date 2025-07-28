@@ -9,9 +9,9 @@ mkdir -p /app/data
 : "${LTC_RPCBIND:=0.0.0.0}"
 : "${LTC_RPCALLOWIP:=0.0.0.0/0}"
 : "${LTC_TESTNET:=}"
-: "${LTC_PRUNE:=550}"  # ~550 MB
+: "${LTC_PRUNE:=550}"
 
-CONFIG_FILE="/app/data/litecoin.conf"
+CONFIG_FILE="/app/litecoin.conf"
 
 # Create the config file
 cat > "$CONFIG_FILE" <<EOF
@@ -27,4 +27,4 @@ if [ -n "$LTC_TESTNET" ]; then
   echo "testnet=1" >> "$CONFIG_FILE"
 fi
 
-exec litecoind -datadir=/app/data "$@"
+exec litecoind -datadir=/app/data -conf="$CONFIG_FILE" "$@"
