@@ -15,6 +15,7 @@ CONFIG_FILE="/app/litecoin.conf"
 
 # Create the config file
 cat > "$CONFIG_FILE" <<EOF
+[main]
 server=1
 rpcuser=${LTC_RPCUSER}
 rpcpassword=${LTC_RPCPASSWORD}
@@ -23,8 +24,15 @@ rpcallowip=${LTC_RPCALLOWIP}
 prune=${LTC_PRUNE}
 EOF
 
-if [ -n "$LTC_TESTNET" ]; then
-  echo "testnet=1" >> "$CONFIG_FILE"
+if [ "$LTC_TESTNET" = "1" ]; then
+  cat >> "$CONFIG_FILE" <<EOF
+
+[test]
+testnet=1
+rpcbind=${LTC_RPCBIND}
+rpcallowip=${LTC_RPCALLOWIP}
+EOF
 fi
+
 
 exec litecoind -datadir=/app/data -conf="$CONFIG_FILE" "$@"
