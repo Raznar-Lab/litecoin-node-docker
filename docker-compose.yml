@@ -1,0 +1,5 @@
+services:
+  app:
+    image: ghcr.io/raznar-lab/litecoin-node-docker:main
+    volumes:
+      - ./data:/app/data
