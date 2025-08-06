@@ -7,12 +7,12 @@ networks:
     driver: bridge
 
 services:
-  app-prod:
-    image: ghcr.io/raznar-lab/litecoin-node-docker:latest
-    volumes:
-      - ./data:/app/data
-    networks:
-      - litecoin-net
+  # app-prod:
+  #   image: ghcr.io/raznar-lab/litecoin-node-docker:latest
+  #   volumes:
+  #     - ./data:/app/data
+  #   networks:
+  #     - litecoin-net
 
   app-testnet:
     image: ghcr.io/raznar-lab/litecoin-node-docker:latest
@@ -23,4 +23,5 @@ services:
     networks:
       - litecoin-testnet
     expose:
-      - "9332:9332"
+      - "19332:19332"
+      - "19335:19335"
