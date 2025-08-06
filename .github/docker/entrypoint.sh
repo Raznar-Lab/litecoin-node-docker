@@ -13,7 +13,7 @@ mkdir -p /app/data
 
 CONFIG_FILE="/app/litecoin.conf"
 
-# Create the config file
+# Choose the correct config section
 NETWORK_SECTION="[main]"
 EXTRA_TESTNET=""
 
@@ -22,7 +22,7 @@ if [ "$LTC_TESTNET" = "1" ]; then
   EXTRA_TESTNET="testnet=1"
 fi
 
-touch "$CONFIG_FILE"
+# Write config file
 cat > "$CONFIG_FILE" <<EOF
 $NETWORK_SECTION
 server=1
@@ -34,6 +34,6 @@ rpcallowip=${LTC_RPCALLOWIP}
 prune=${LTC_PRUNE}
 EOF
 
-
-
-exec litecoind -datadir=/app/data -conf="$CONFIG_FILE" "$@"
+# Launch litecoind with explicit bind (helps in Docker)
+exec litecoind -datadir=/app/data -conf="$CONFIG_FILE" \
+  -rpcbind=0.0.0.0 -rpcallowip=0.0.0.0/0 "$@"

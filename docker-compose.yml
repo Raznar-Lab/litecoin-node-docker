@@ -22,3 +22,5 @@ services:
       - LTC_TESTNET=1
     networks:
       - litecoin-testnet
+    expose:
+      - "9332:9332"
