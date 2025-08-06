@@ -22,6 +22,7 @@ if [ "$LTC_TESTNET" = "1" ]; then
   EXTRA_TESTNET="testnet=1"
 fi
 
+touch "$CONFIG_FILE"
 cat > "$CONFIG_FILE" <<EOF
 $NETWORK_SECTION
 server=1
