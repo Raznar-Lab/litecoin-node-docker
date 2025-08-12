@@ -9,7 +9,7 @@ set -e
 : "${LTC_RPCALLOWIP:=0.0.0.0/0}"
 : "${LTC_TESTNET:=}"
 : "${LTC_PRUNE:=550}"
-: "${LTC_DATADIR:=./data}"  # Default data directory inside container
+: "${LTC_DATADIR:=$(pwd)/data}"
 
 # Build args
 ARGS=(
