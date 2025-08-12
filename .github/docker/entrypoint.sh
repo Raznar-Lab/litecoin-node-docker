@@ -1,4 +1,5 @@
 #!/bin/bash
+cd /app
 set -e
 
 # Defaults
@@ -8,6 +9,7 @@ set -e
 : "${LTC_RPCALLOWIP:=0.0.0.0/0}"
 : "${LTC_TESTNET:=}"
 : "${LTC_PRUNE:=550}"
+: "${LTC_DATADIR:=./data}"  # Default data directory inside container
 
 # Build args
 ARGS=(
@@ -17,6 +19,7 @@ ARGS=(
   -rpcbind="${LTC_RPCBIND}"
   -rpcallowip="${LTC_RPCALLOWIP}"
   -prune="${LTC_PRUNE}"
+  -datadir="${LTC_DATADIR}"
 )
 
 # Enable testnet if requested
